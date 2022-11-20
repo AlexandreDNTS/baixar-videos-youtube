@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from importlib.resources import path
 from pytube import YouTube
 
 
@@ -34,3 +35,7 @@ while True:
     if window == baixarvideo and eventos == 'cancelar':
         baixarvideo.hide()
         telainicial.un_hide()
+    if window == baixarvideo and eventos == 'BAIXAR':
+        yt = YouTube(valores['url'])
+        ys = yt.streams.get_highest_resolution()
+        ys.download(valores['caminho'])
