@@ -11,9 +11,26 @@ def tela_inicial():
     return sg.Window('Baixar Vídeos do youtube', layout=layout, finalize=True)
 
 
-telainicial = tela_inicial()
+def baixar_video():
+    layout = [
+        [sg.Text('BAIXAR VÍDEOS DO YOUTUBE')],
+        [sg.Text('\n\n')],
+        [sg.Text('url '), sg.Input(key='url'), sg.Text(
+            'caminho'), sg.Input(key='caminho')],
+        [sg.Button('BAIXAR'), sg.Button('cancelar')]
+    ]
+    return sg.Window('baixar videos', layout=layout, finalize=True)
+
+
+telainicial, baixarvideo = tela_inicial(), None
 
 while True:
     window, eventos, valores = sg.read_all_windows()
-    if window == telainicial and eventos == sg.WIN_CLOSED:
+    if window == telainicial and eventos == sg.WIN_CLOSED or window == baixarvideo and eventos == sg.WIN_CLOSED:
         break
+    if window == telainicial and eventos == 'baixar mp3':
+        baixarvideo = baixar_video()
+        telainicial.hide()
+    if window == baixarvideo and eventos == 'cancelar':
+        baixarvideo.hide()
+        telainicial.un_hide()
